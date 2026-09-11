@@ -1,0 +1,19 @@
+{
+  "official_repository": "https://github.com/Robbyant/lingbot-va",
+  "official_commit": "7c6ffa9bfc4b83582cafc860fab4c82cc7deeeeb",
+  "deployment_source_commit": "13e9537719b2e12eeae41bfeb7d1fc666b09ba07",
+  "training_source": "Historical training snapshot; original Git metadata unavailable",
+  "runtime_manifest": "integration/reference_manifest.json",
+  "packaging_changes": [
+    "Repository-relative runtime and config paths",
+    "MODEL_ROOT override is now consumed by trainer",
+    "Example camera serial placeholders",
+    "Synthetic smoke input instead of recorded camera images"
+  ],
+  "training_tools_sha256": {
+    "validate_fold_lingbot_dataset.py": "891487ed996716e9187063aaac6807aa6d1dcb00c27ad675d22983040a7d3a2b",
+    "build_fixed_fold_dataset.py": "4468a69f0152abc50a3c179a4cd9444267dd1dcc49763cd5595f1db22b2f3c4f",
+    "adapt_fold_lerobot_for_lingbot.py": "9ee1c25e989a072d94de5c6d1712bc3ff590822d288cfaeb6cdd63af26580622",
+    "extract_fold_latents.py": "f17e41f77f56003b682798752f202254d0b4fec5bf445c5745d83d060af46477"
+  }
+}

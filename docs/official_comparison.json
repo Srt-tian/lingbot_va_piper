@@ -1,0 +1,99 @@
+{
+  "core_pass": true,
+  "failures": [],
+  "files": {
+    "wan_va/wan_va_server.py": {
+      "official_sha256": "9c2a427611db487fea5cf40f184b713bf2088e533990ee00fdcd020d2668b4bf",
+      "ours_sha256": "4b7bd0d9ad84fe1c025d2b5ed3e8c6529498713dcac3a881d840d105d1369947",
+      "changed_functions": [
+        "VA_Server.__init__"
+      ],
+      "added_functions": [],
+      "critical_functions_checked": [
+        "VA_Server._compute_kv_cache",
+        "VA_Server._encode_obs",
+        "VA_Server._infer",
+        "VA_Server._prepare_latent_input",
+        "VA_Server._reset",
+        "VA_Server.infer",
+        "VA_Server.postprocess_action",
+        "VA_Server.preprocess_action"
+      ],
+      "critical_mismatches": []
+    },
+    "wan_va/train.py": {
+      "official_sha256": "103e04031b32cbbef0c829a7b3f52986aaaffa996040c173ff8f9a67cc4985ab",
+      "ours_sha256": "b60af5f4fab795d9271d3e42ff3e841443406115cfcb7234f020a80f9bb7aec4",
+      "changed_functions": [
+        "Trainer.__init__",
+        "Trainer._train_step",
+        "Trainer.train",
+        "run"
+      ],
+      "added_functions": [
+        "Trainer._debug_log"
+      ],
+      "critical_functions_checked": [
+        "Trainer._add_noise",
+        "Trainer._prepare_input_dict",
+        "Trainer.compute_loss"
+      ],
+      "critical_mismatches": []
+    },
+    "wan_va/modules/utils.py": {
+      "official_sha256": "563499ae1aa9fdbe990963c8c133423241f1a63d3f59743b778a1eb4c47757f4",
+      "ours_sha256": "563499ae1aa9fdbe990963c8c133423241f1a63d3f59743b778a1eb4c47757f4",
+      "changed_functions": [],
+      "added_functions": [],
+      "critical_functions_checked": [],
+      "critical_mismatches": []
+    },
+    "wan_va/modules/model.py": {
+      "official_sha256": "f65fdca5f28b327bfc89ca082a7b55eee3fb4ab1ffc469c642a075920e6f4487",
+      "ours_sha256": "1540cea62ce6c48f79eb61a4767005c6268bea387e3e84fa4d0d5d5676ba33d1",
+      "changed_functions": [
+        "WanAttention.__init__"
+      ],
+      "added_functions": [],
+      "critical_functions_checked": [
+        "FlexAttnFunc._get_cross_mask_mod",
+        "FlexAttnFunc._get_mask_mod",
+        "FlexAttnFunc.forward",
+        "WanAttention.allocate_slots",
+        "WanAttention.forward",
+        "WanAttention.restore_cache",
+        "WanAttention.update_cache",
+        "WanRotaryPosEmbed.forward",
+        "WanTimeTextImageEmbedding.forward",
+        "WanTransformer3DModel.forward",
+        "WanTransformer3DModel.forward_train",
+        "WanTransformerBlock.forward"
+      ],
+      "critical_mismatches": []
+    },
+    "wan_va/utils/scheduler.py": {
+      "official_sha256": "9833300936d1001e5dfb0db76d5e0e131429685980de7b3c9716288ec28da7f1",
+      "ours_sha256": "9833300936d1001e5dfb0db76d5e0e131429685980de7b3c9716288ec28da7f1",
+      "changed_functions": [],
+      "added_functions": [],
+      "critical_functions_checked": [],
+      "critical_mismatches": []
+    },
+    "wan_va/dataset/lerobot_latent_dataset.py": {
+      "official_sha256": "984b20899e87c914f491f10c23608f06cb815c56112bdd929e39e187c89566ee",
+      "ours_sha256": "ade61b4f2f5c33c5b9a3e417132a93812a57f05bf6a5c0f11a19b27c9ba7c4b4",
+      "changed_functions": [
+        "LatentLeRobotDataset.__init__",
+        "LatentLeRobotDataset._action_post_process",
+        "LatentLeRobotDataset._get_global_idx",
+        "LatentLeRobotDataset.parse_meta",
+        "construct_lerobot_multi_processor"
+      ],
+      "added_functions": [
+        "LatentLeRobotDataset._find_latent_span"
+      ],
+      "critical_functions_checked": [],
+      "critical_mismatches": []
+    }
+  }
+}

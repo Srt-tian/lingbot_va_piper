@@ -1,0 +1,21 @@
+# Direct-hardware Agilex inference client dependencies.
+# Install with pip in a separate client environment.
+numpy>=1.22.4,<2.0.0
+opencv-python>=4.9.0.80
+pyyaml>=6.0
+h5py>=3.8.0
+PyQt5>=5.15
+pyqtgraph>=0.13
+piper_sdk
+pyrealsense2
+python-can>=3.3.4
+# [collection] ROKAE 链路：ZMQ 模型通信 + msgpack 序列化 + LCM 关节状态
+pyzmq>=25.0
+msgpack>=1.0
+lcm>=1.4
+
+# OpenPI transport and optional replay dependencies.
+websockets>=14.0
+Pillow
+dm-tree
+polars

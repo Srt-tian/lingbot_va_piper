@@ -1,0 +1,150 @@
+# LingBot-VA sync client. Existing inference repository hardware mapping retained.
+# CAN interfaces are expected to be configured already, as in the current workstation.
+runtime:
+  backend: sdk
+server:
+  transport: websocket
+  host: 127.0.0.1
+  port: 8014
+python_bin: /.venv/bin/python
+keyboard_control:
+  enabled: true
+  start_paused: true
+  start_key: s
+  stop_key: space
+  quit_key: q
+can:
+  activate: false
+  bitrate: 1000000
+  left:
+    name: can_left_slave
+    usb: 1-5:1.0
+  right:
+    name: can_right_slave
+    usb: 1-8:1.0
+camera:
+  enable: true
+  width: 640
+  height: 480
+  fps: 30
+  use_depth: false
+  front:
+    serial: 'SET_CAMERA_SERIAL'
+    model_key: hand_right
+  right:
+    serial: 'SET_CAMERA_SERIAL'
+    model_key: top_head
+  left:
+    serial: 'SET_CAMERA_SERIAL'
+    model_key: hand_left
+arm:
+  auto_enable: true
+  gripper_exist: true
+  gripper_multiple: 1
+  control_mode: high_follow
+  right_offset: 0.003
+  command_velocity: 100
+  gripper_effort: 1000
+  high_follow:
+    control_hz: 200
+    max_queue_size: 32
+    max_joint_vel:
+    - 2.0
+    - 2.0
+    - 2.0
+    - 2.5
+    - 2.5
+    - 2.5
+    interpolator:
+      type: waypoint_cubic
+      tangent_mode: centripetal
+      monotone_projection: true
+      monotone_projection_dims: arm
+      duration_scale: 1.0
+      min_duration_s: 0.0
+      max_duration_s: 0.0
+  init_steps: 100
+  init_sleep_s: 0.01
+  init_action:
+    left:
+    - 0.0
+    - 0.32
+    - -0.36
+    - 0.0
+    - 0.24
+    - 0.0
+    - 0.07
+    right:
+    - 0.0
+    - 0.32
+    - -0.36
+    - 0.0
+    - 0.24
+    - 0.0
+    - 0.07
+  shutdown_action:
+    enabled: true
+    left:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.07
+    right:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.07
+    steps: 200
+    sleep_s: 0.01
+inference:
+  execution_mode: async
+  async_mode: temporal_smoothing
+  min_smooth_steps: 4
+  execute_prefix_steps: 16
+  inference_rate: 3
+  latency_k: 0
+  ctrl_type: joint
+  chunk_size: 36
+  max_publish_step: null
+  publish_rate: 30
+  observation_rate: 30
+  num_denoising_steps: 10
+  prompt: flat the cloth with both robot arms
+  action_buffer: stream
+  log_every_steps: 36
+  modes:
+    async:
+      temporal_smoothing: {}
+  available_modes:
+  - temporal_smoothing
+recording:
+  record_model_io: true
+  record_policy_rollout: false
+  record_runtime_events: true
+  record_action_steps: true
+  root_dir: outputs/client_records
+  unique_run_dir: true
+  fps: 10
+  policy_rollout_fps: 30
+  queue_size: 4096
+  video_codec: mp4v
+telemetry_plot:
+  enabled: false
+  auto_start: true
+  window_sec: 10.0
+  queue_size: 4096
+  default_arms:
+  - left
+  default_topics:
+  - cmd_high_follow_200hz
+  - state_200hz
+  publish:
+    vla_command: true
+    high_follow_command: true
+    state: true

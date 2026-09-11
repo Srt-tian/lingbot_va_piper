@@ -1,0 +1,15 @@
+{
+  "unit_tests": 21,
+  "unit_tests_passed": true,
+  "official_core_functions_checked": 23,
+  "official_core_passed": true,
+  "runtime_sha256_files_checked": 29,
+  "client_dry_run_passed": true,
+  "tracked_code_and_docs_files_checked": 120,
+  "tracked_bytes": 641236,
+  "syntax_checks_passed": true,
+  "credential_pattern_scan_passed": true,
+  "model_weights_data_recordings_included": false,
+  "new_training_or_hardware_run": false,
+  "scope": "Pattern scan is a check, not a guarantee of absence of every possible secret; imported upstream whitespace retained."
+}
