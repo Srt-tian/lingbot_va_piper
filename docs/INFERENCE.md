@@ -41,3 +41,9 @@ python integration/smoke_official.py
 ```
 
 打包版本的 smoke 使用合成图像，只能验证协议、输出形状与历史流程，不能评价衣服任务效果。旧 stateless/异步配置只用于对照，需要配套的 `serve_lingbot.py` 服务，不能连接 `official_kv` 服务。
+
+
+## 可选慢速播放
+`slow_prefetch` 提供无历史服务上的完整块预取、可调发布频率和等待超时处理，
+详见 [SLOW_PLAYBACK.md](SLOW_PLAYBACK.md)。它不改变本页的官方 KV 同步流程，
+也不是论文的 FDM-grounded 异步算法。

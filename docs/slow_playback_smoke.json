@@ -1,0 +1,41 @@
+[
+  {
+    "playback_rate_hz": 30,
+    "actions": 72,
+    "chunks": 2,
+    "median_action_interval_ms": 33.47443000529893,
+    "min_action_interval_ms": 33.38902600808069,
+    "boundary_gap_ms": 1387.3340296481424,
+    "cold_start_rtt_ms": 3016.6499059996568,
+    "next_chunk_rtt_ms": 2591.1832920101006,
+    "result_age_at_second_chunk_s": 2.5925324560084846,
+    "all_threads_stopped": true,
+    "hardware_commands": 0
+  },
+  {
+    "playback_rate_hz": 15,
+    "actions": 72,
+    "chunks": 2,
+    "median_action_interval_ms": 66.77904400567058,
+    "min_action_interval_ms": 66.74278900027275,
+    "boundary_gap_ms": 187.1702363268317,
+    "cold_start_rtt_ms": 2597.8419080202,
+    "next_chunk_rtt_ms": 2591.1649809859227,
+    "result_age_at_second_chunk_s": 2.5914916599867865,
+    "all_threads_stopped": true,
+    "hardware_commands": 0
+  },
+  {
+    "playback_rate_hz": 12,
+    "actions": 72,
+    "chunks": 2,
+    "median_action_interval_ms": 83.53787001396995,
+    "min_action_interval_ms": 83.4250939951744,
+    "boundary_gap_ms": 0.2058356864533123,
+    "cold_start_rtt_ms": 2607.073703984497,
+    "next_chunk_rtt_ms": 2604.920396988746,
+    "result_age_at_second_chunk_s": 3.0061841039860155,
+    "all_threads_stopped": true,
+    "hardware_commands": 0
+  }
+]

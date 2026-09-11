@@ -47,6 +47,13 @@ PYTHON_BIN=/path/to/client/env/bin/python ./start_history_client.sh --dry-run
 
 真机操作前必须复制配置并填写三相机序列号、CAN 和服务器地址，见 [推理说明](docs/INFERENCE.md)。默认客户端启动后等待 `s`；空格停止当前 episode 并回初始化，`q` 退出会执行配置中的归零动作。
 
+## 可选：异步慢速播放
+
+新增实验性 `slow_prefetch`：完整播放 36 步，默认 12 Hz，最多预取下一块。使用
+`start_stateless_server.sh` 和 `start_slow_client.sh`，不连接官方历史协议服务。
+真实模型内存测试中，12 Hz 的额外轮间等待约 0.2 ms；这不代表真机动作质量已验证。
+配置、测试和局限见 [异步慢速播放](docs/SLOW_PLAYBACK.md)。
+
 ## 当前模式与边界
 
 默认 `official_kv + sync`：每个 episode reset 一次，首轮执行 36 步，后续 48 步；每 3 个动作收集实际观测，再用官方 `compute_kv_cache` 回填历史。动作是左 6 关节/夹爪、右 6 关节/夹爪的 14 维绝对指令。

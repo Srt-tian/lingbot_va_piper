@@ -25,6 +25,10 @@ class FiniteSyncBuffer:
 
 
 def validate_execution(cfg):
+    from slow_playback import enabled, validate_config
+    if enabled(cfg):
+        validate_config(cfg)
+        return
     if cfg.get("policy_protocol") == "official_kv":
         if cfg.get("execution_mode") != "sync" or int(cfg.get("chunk_size", 0)) != 48:
             raise ValueError("Official KV flow requires sync execution and chunk_size=48")
@@ -70,6 +74,10 @@ def install_adapter(reference_root):
             self._publish_lock = threading.RLock()
             super().__init__(*args, **kwargs)
             validate_execution(self.cfg)
+            from slow_playback import enabled, OneChunkPrefetch
+            if enabled(self.cfg):
+                self.cfg.setdefault("publish_rate", 12)
+                self.slow_prefetch = OneChunkPrefetch()
             if self.cfg.get("execution_mode") == "sync":
                 self.stream_buffer = FiniteSyncBuffer(self.stream_buffer)
             else:
@@ -77,6 +85,8 @@ def install_adapter(reference_root):
                 self.mode_handler = PrefixActionMode(self.mode_handler, self.cfg.get("execute_prefix_steps", 36))
 
         def _warmup_inference(self):
+            if hasattr(self, "slow_prefetch"):
+                return  # cold-start result is executed, not discarded
             if self.cfg.get("policy_protocol") == "official_kv":
                 return  # first real request warms up; never create discarded history
             return super()._warmup_inference()
@@ -87,7 +97,16 @@ def install_adapter(reference_root):
                 return run_official_loop(self)
             return super()._sync_loop()
 
+        def _inference_thread(self):
+            if hasattr(self, "slow_prefetch"):
+                from slow_playback import inference_loop
+                return inference_loop(self)
+            return super()._inference_thread()
+
         def _control_loop(self):
+            if hasattr(self, "slow_prefetch"):
+                from slow_playback import control_loop as slow_control_loop
+                return slow_control_loop(self)
             control_loop(self)
 
         def request_episode_stop(self):
@@ -108,6 +127,11 @@ def install_adapter(reference_root):
                 if isinstance(self.stream_buffer, AtomicActionBuffer):
                     self.stream_buffer.close()
                 self._hold_robot_position()
+            if hasattr(self, "slow_prefetch"):
+                self.slow_prefetch.close()
+                # Close transport before joining, to unblock an in-flight recv.
+                if self._policy is not None:
+                    self._policy.close()
             for thread in self.threads:
                 thread.join(timeout=10.0)
             super().close()
@@ -155,7 +179,9 @@ def main():
         print(json.dumps({"status": "dry_run_ok", "reference_root": known.reference_root,
                           "config": cfg_args.config, "image_resize": "server-side direct 256x256",
                           "chunk_size": cfg.runtime_options().get("chunk_size"),
-                          "policy_protocol": cfg.runtime_options().get("policy_protocol", "stateless"), "hardware_started": False}, indent=2))
+                          "policy_protocol": cfg.runtime_options().get("policy_protocol", "stateless"), "playback_mode": cfg.runtime_options().get("playback_mode", "default"),
+                          "publish_rate": cfg.runtime_options().get("publish_rate"),
+                          "hardware_started": False}, indent=2))
         return
     # Fail before constructing RobotIO: the reference client auto-runs without a TTY.
     if not sys.stdin.isatty():

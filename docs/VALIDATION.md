@@ -10,3 +10,10 @@
 Runtime 原文件 SHA 在 `integration/reference_manifest.json`，仍包含原工作树未提交改动的明确来源标记；不能将其称为原仓库纯净提交快照。原部署日志和相机图像没有发布。
 
 打包后验证：21 项测试通过、29 个 Runtime 文件哈希一致、23 个官方核心函数 AST 一致、客户端 dry-run 通过；Python/shell 语法和凭据特征检查通过。结果见 package_validation.json。导入的上游文件原始空白格式保留。
+
+
+## 慢速播放功能验证
+新增后共 31 项测试通过，包含预取顺序、节拍、故障和停止；真实模型/内存 IO
+在 30/15/12 Hz 各执行两块 72 步，均通过，无硬件命令。
+结果见 slow_playback_smoke.json，边界说明见 SLOW_PLAYBACK.md。
+原 package_validation.json 记录初次整理时的 21 项测试，不代表新增功能的测试总数。
